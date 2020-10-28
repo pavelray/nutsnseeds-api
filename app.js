@@ -3,6 +3,7 @@ const morgan = require('morgan');
 
 const categoryRouter = require('./routes/categoryRoutes');
 const productRouter = require('./routes/productRoutes');
+const productSize = require('./routes/productSizeRoutes');
 const userRouter = require('./routes/userRoutes');
 
 const app = express();
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
 // 3) ROUTES
 app.use('/api/v1/category', categoryRouter);
 app.use('/api/v1/product', productRouter);
+app.use('/api/v1/product-size', productSize);
 app.use('/api/v1/users', userRouter);
 
 module.exports = app;
