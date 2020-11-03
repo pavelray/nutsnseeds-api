@@ -6,6 +6,7 @@ const categoryRouter = require('./routes/categoryRoutes');
 const productRouter = require('./routes/productRoutes');
 const productSize = require('./routes/productSizeRoutes');
 const userRouter = require('./routes/userRoutes');
+const addressRouter = require('./routes/addressRouter');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/api/v1/category', categoryRouter);
 app.use('/api/v1/product', productRouter);
 app.use('/api/v1/product-size', productSize);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/address', addressRouter);
 
 app.all('*', (req, res, next) => {
   res.status(404).json({
