@@ -3,7 +3,7 @@ const APIFeatures = require('../utils/apiFearures');
 
 exports.getAllCategories = async (req, res) => {
   try {
-    const features = new APIFeatures(Category.find(), req.query).limitFields();
+    const features = new APIFeatures(Category.find(), req.query).filter().limitFields();
 
     const categories = await await features.query;
 
