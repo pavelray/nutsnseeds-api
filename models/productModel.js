@@ -46,10 +46,20 @@ const productSchema = new mongoose.Schema({
   }
 });
 
+// Document Middleware
+// This middleware runs before .create() and .save() of any model
+// This will not work for .insertMany()
 productSchema.pre('save', function(next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
+
+// This is query middleware
+// Returns only active product which are available for sell
+// productSchema.pre(/^find/, function(next) {
+//   this.find({ isOutOfStock: { $ne: true } });
+//   next();
+// });
 
 const Product = mongoose.model('Product', productSchema);
 
