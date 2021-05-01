@@ -1,99 +1,80 @@
 const Product = require('../models/productModel');
 const APIFeatures = require('../utils/apiFearures');
+const AppError = require('../utils/appError');
+const catchAsync = require('../utils/catchAsync');
 
-exports.getAllProducts = async (req, res) => {
-  try {
-    const features = new APIFeatures(Product.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const products = await features.query;
+/**
+ * Get all products - with filter,sort and pagination
+ * eg. /products?_id='1212'&name='test'
+ */
+exports.getAllProducts = catchAsync(async (req, res, next) => {
+  const features = new APIFeatures(Product.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const products = await features.query;
 
-    res.status(200).json({
-      status: 'success',
-      results: products.length,
-      data: {
-        products
-      }
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    });
+  res.status(200).json({
+    status: 'success',
+    results: products.length,
+    data: {
+      products
+    }
+  });
+});
+
+/** Get a perticular product by its ID */
+exports.getProduct = catchAsync(async (req, res, next) => {
+  const product = await Product.findById(req.params.id);
+  if(!product){
+    return next(new AppError('No product found with that Id', 404));
   }
-};
+  res.status(200).json({
+    status: 'success',
+    data: {
+      product
+    }
+  });
+});
 
-exports.getProduct = async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
+/**Create a new product */
+exports.createProduct = catchAsync(async (req, res, next) => {
+  const newProduct = await Product.create(req.body);
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        product
-      }
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    });
+  res.status(201).json({
+    status: 'success',
+    data: {
+      product: newProduct
+    }
+  });
+});
+
+/**Update a perticular product by its Id */
+exports.updateProduct = catchAsync(async (req, res, next) => {
+  const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true
+  });
+  if(!product){
+    return next(new AppError('No product found with that Id', 404));
   }
-};
+  res.status(200).json({
+    status: 'success',
+    data: {
+      product
+    }
+  });
+});
 
-exports.createProduct = async (req, res) => {
-  try {
-    const newProduct = await Product.create(req.body);
-
-    res.status(201).json({
-      status: 'success',
-      data: {
-        product: newProduct
-      }
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    });
+/**Delete a perticular product by Id */
+exports.deleteProduct = catchAsync(async (req, res, next) => {
+  const product = await Product.findByIdAndDelete(req.params.id);
+  if(!product){
+    return next(new AppError('No product found with that Id', 404));
   }
-};
-
-exports.updateProduct = async (req, res) => {
-  try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-    });
-
-    res.status(200).json({
-      status: 'success',
-      data: {
-        product
-      }
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    });
-  }
-};
-
-exports.deleteProduct = async (req, res) => {
-  try {
-    await Product.findByIdAndDelete(req.params.id);
-
-    res.status(204).json({
-      status: 'success',
-      data: null
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    });
-  }
-};
+  res.status(204).json({
+    status: 'success',
+    data: null
+  });
+});

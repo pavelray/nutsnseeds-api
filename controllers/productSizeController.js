@@ -1,74 +1,47 @@
 const ProductSize = require('../models/productSizeModel');
+const catchAsync = require('../utils/catchAsync');
 
-exports.getProductSize = async (req, res) => {
-  try {
-    const size = await ProductSize.find({ productId: req.params.id });
+exports.getProductSize = catchAsync(async (req, res, next) => {
+  const size = await ProductSize.find({ productId: req.params.id });
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        size
-      }
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    });
-  }
-};
+  res.status(200).json({
+    status: 'success',
+    data: {
+      size
+    }
+  });
+});
 
-exports.createProductSize = async (req, res) => {
-  try {
-    const newSize = await ProductSize.create(req.body);
+exports.createProductSize = catchAsync(async (req, res, next) => {
+  const newSize = await ProductSize.create(req.body);
 
-    res.status(201).json({
-      status: 'success',
-      data: {
-        size: newSize
-      }
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    });
-  }
-};
+  res.status(201).json({
+    status: 'success',
+    data: {
+      size: newSize
+    }
+  });
+});
 
-exports.updateProductSize = async (req, res) => {
-  try {
-    const size = await ProductSize.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-    });
+exports.updateProductSize = catchAsync(async (req, res, next) => {
+  const size = await ProductSize.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true
+  });
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        size
-      }
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    });
-  }
-};
+  res.status(200).json({
+    status: 'success',
+    data: {
+      size
+    }
+  });
+});
 
-exports.deleteProductSize = async (req, res) => {
-  try {
-    await ProductSize.findByIdAndDelete(req.params.id);
+exports.deleteProductSize = catchAsync(async (req, res, next) => {
+  await ProductSize.findByIdAndDelete(req.params.id);
 
-    res.status(204).json({
-      status: 'success',
-      data: null
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    });
-  }
-};
+  res.status(204).json({
+    status: 'success',
+    data: null
+  });
+});
