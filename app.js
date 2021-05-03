@@ -10,7 +10,6 @@ const productSize = require('./routes/productSizeRoutes');
 const userRouter = require('./routes/userRoutes');
 const addressRouter = require('./routes/addressRouter');
 
-
 const app = express();
 
 // 1) MIDDLEWARES

@@ -27,7 +27,7 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
 /** Get a perticular product by its ID */
 exports.getProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
-  if(!product){
+  if (!product) {
     return next(new AppError('No product found with that Id', 404));
   }
   res.status(200).json({
@@ -56,7 +56,7 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
     new: true,
     runValidators: true
   });
-  if(!product){
+  if (!product) {
     return next(new AppError('No product found with that Id', 404));
   }
   res.status(200).json({
@@ -70,7 +70,7 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
 /**Delete a perticular product by Id */
 exports.deleteProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findByIdAndDelete(req.params.id);
-  if(!product){
+  if (!product) {
     return next(new AppError('No product found with that Id', 404));
   }
   res.status(204).json({
