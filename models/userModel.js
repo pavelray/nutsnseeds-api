@@ -14,6 +14,11 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email address']
   },
+  role: {
+    type: String,
+    enum: ['user', 'manager', 'admin'],
+    default: 'user'
+  },
   password: {
     type: String,
     required: [true, 'Please provide a password'],
@@ -26,7 +31,8 @@ const userSchema = new mongoose.Schema({
       return el === this.password;
     },
     message: 'Password and Confirm Password should match'
-  }
+  },
+  passwordUpdated: Date
 });
 
 userSchema.pre('save', async function(next) {
@@ -41,6 +47,15 @@ userSchema.pre('save', async function(next) {
 // This is an instance method. This will be availabe for all the instances of userModule
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword) {
   return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+userSchema.methods.changePasswordAfter = function(JWTTimeStamp) {
+  if (this.passwordUpdated) {
+    const changedTimeStamp = parseInt(this.passwordUpdated.getTime() / 1000, 10);
+    return JWTTimeStamp < changedTimeStamp;
+  }
+  // False means password NOT changed
+  return false;
 };
 
 const User = mongoose.model('User', userSchema);
