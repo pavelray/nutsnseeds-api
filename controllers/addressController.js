@@ -2,6 +2,8 @@ const Address = require('../models/addressModel');
 const APIFeatures = require('../utils/apiFearures');
 const catchAsync = require('../utils/catchAsync');
 
+// Returns all address
+// Add filter to get address by UserId
 exports.getAllAddess = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(Address.find(), req.query).filter().limitFields();
   const address = await await features.query;
@@ -15,6 +17,7 @@ exports.getAllAddess = catchAsync(async (req, res, next) => {
   });
 });
 
+// Returns a selcted address based on address id
 exports.getAddress = catchAsync(async (req, res, next) => {
   const address = await Address.findById(req.params.id);
 
@@ -26,6 +29,7 @@ exports.getAddress = catchAsync(async (req, res, next) => {
   });
 });
 
+// Create address
 exports.createAddress = catchAsync(async (req, res, next) => {
   const newAddress = await Address.create(req.body);
 
@@ -37,6 +41,7 @@ exports.createAddress = catchAsync(async (req, res, next) => {
   });
 });
 
+// Update a address based on it's ID
 exports.updateAddress = catchAsync(async (req, res, next) => {
   const address = await Address.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
