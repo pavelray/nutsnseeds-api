@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Megrim|Nunito+Sans:400,900"
+      rel="stylesheet"
+    />
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+    <title>Nutsnseeds</title>
+    <style>
+        .invoice-title h2, .invoice-title h3 {
+            display: inline-block;
+        }
+
+        .table > tbody > tr > .no-line {
+            border-top: none;
+        }
+
+        .table > thead > tr > .no-line {
+            border-bottom: none;
+        }
+
+        .table > tbody > tr > .thick-line {
+            border-top: 2px solid;
+        }
+    </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                    <div class="col-xs-6">
+                        <h3>Nutsnseeds</h3>
+                        <h4>Tax Invoice</h4>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <h5>Invoice No: {%INVOICE_NUMBER%}</h5>
+                        <h5>Invoice Date: {%INVOICE_DATE%}</h5>
+                        <h5>Order # {%ORDER_NUMBER%}</h5>
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <address>
+                            <strong>Nutsnseeds Pvt. Ltd.</strong><br>
+                                Pai Layout<br>
+                                Bangalore<br>
+                                560016<br>
+                            </address>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <address>
+                                <strong>Billed To:</strong><br>
+                                    {%CUSTOMER_NAME%}<br>
+                                    Ph: {%PHONE_NUMBER%}<br>
+                                    {%ADDRESS_LINE_1%}<br>
+                                    {%ADDRESS_LINE_2%}<br>
+                                    {%CITY%}, {%STATE%} {%PIN_CODE%}
+                            </address>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <!-- <address>
+                                <strong>Payment Method:</strong><br>
+                                Visa ending **** 4242<br>
+                                jsmith@email.com
+                            </address> -->
+                        </div>
+                        <!-- <div class="col-xs-6 text-right">
+                            <address>
+                                <strong>Order Date:</strong><br>
+                                {March 7, 2014}<br><br>
+                            </address>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><strong>Order summary</strong></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <td><strong>Item</strong></td>
+                                            <td></td>
+                                            <td class="text-center"><strong>Quantity</strong></td>
+                                            <td class="text-right"><strong>Totals</strong></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                                        {%ITEMS%}
+                                        <tr>
+                                            <td class="thick-line"></td>
+                                            <td class="thick-line"></td>
+                                            <td class="thick-line text-center"><strong>Subtotal</strong></td>
+                                            <td class="thick-line text-right">&#x20B9;{%SUBTOTAL%}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="no-line"></td>
+                                            <td class="no-line"></td>
+                                            <td class="no-line text-center"><strong>Shipping</strong></td>
+                                            <td class="no-line text-right">&#x20B9;{%SHIPPING%}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="no-line"></td>
+                                            <td class="no-line"></td>
+                                            <td class="no-line text-center"><strong>Total</strong></td>
+                                            <td class="no-line text-right">&#x20B9;{%TOTAL%}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

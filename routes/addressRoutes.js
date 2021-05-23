@@ -1,5 +1,5 @@
 const express = require('express');
-const addressController = require('./../controllers/addressController');
+const addressController = require('../controllers/addressController');
 
 const router = express.Router();
 
@@ -13,5 +13,7 @@ router
   .get(addressController.getAddress)
   .patch(addressController.updateAddress)
   .delete(addressController.deleteAddress);
+
+router.route('/locality').post(addressController.getLocality);
 
 module.exports = router;

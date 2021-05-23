@@ -1,3 +1,4 @@
+const axios = require('axios');
 const Address = require('../models/addressModel');
 const APIFeatures = require('../utils/apiFearures');
 const catchAsync = require('../utils/catchAsync');
@@ -63,4 +64,40 @@ exports.deleteAddress = catchAsync(async (req, res, next) => {
     status: 'success',
     data: null
   });
+});
+
+// Get locality based on zipcode given
+exports.getLocality = catchAsync(async (req, res) => {
+  const { pincode } = req.body;
+  const response = await axios.get(`https://api.postalpincode.in/pincode/${pincode}`);
+
+  if (response.data[0].Status === 'Success') {
+    const postOfficeData = response.data[0].PostOffice;
+    const locality = [];
+    postOfficeData.forEach(postOffice => {
+      locality.push(postOffice.Name);
+    });
+    const district = postOfficeData[0].District;
+    const state = postOfficeData[0].State;
+    const country = postOfficeData[0].Country;
+    const region = postOfficeData[0].Region;
+    const zipCode = postOfficeData[0].Pincode;
+    res.status(200).json({
+      status: 'success',
+      data: {
+        locality,
+        district,
+        state,
+        country,
+        region,
+        pincode: zipCode
+      }
+    });
+  } else {
+    const data = response.data[0].Message;
+    res.status(200).json({
+      status: 'error',
+      data
+    }); // Need to create custome error for this
+  }
 });

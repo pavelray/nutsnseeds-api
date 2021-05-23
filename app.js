@@ -8,7 +8,7 @@ const categoryRouter = require('./routes/categoryRoutes');
 const productRouter = require('./routes/productRoutes');
 const productSize = require('./routes/productSizeRoutes');
 const userRouter = require('./routes/userRoutes');
-const addressRouter = require('./routes/addressRouter');
+const addressRouter = require('./routes/addressRoutes');
 
 const app = express();
 
