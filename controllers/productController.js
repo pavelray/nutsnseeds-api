@@ -2,6 +2,7 @@ const Product = require('../models/productModel');
 const APIFeatures = require('../utils/apiFearures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const factory = require('./handlerFactory');
 
 /**
  * Get all products - with filter,sort and pagination
@@ -26,7 +27,7 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
 
 /** Get a perticular product by its ID */
 exports.getProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id).populate('review');
   if (!product) {
     return next(new AppError('No product found with that Id', 404));
   }
@@ -67,14 +68,15 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
   });
 });
 
-/**Delete a perticular product by Id */
-exports.deleteProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findByIdAndDelete(req.params.id);
-  if (!product) {
-    return next(new AppError('No product found with that Id', 404));
-  }
-  res.status(204).json({
-    status: 'success',
-    data: null
-  });
-});
+exports.deleteProduct = factory.deleteOne(Product);
+// /**Delete a perticular product by Id */
+// exports.deleteProduct = catchAsync(async (req, res, next) => {
+//   const product = await Product.findByIdAndDelete(req.params.id);
+//   if (!product) {
+//     return next(new AppError('No product found with that Id', 404));
+//   }
+//   res.status(204).json({
+//     status: 'success',
+//     data: null
+//   });
+// });

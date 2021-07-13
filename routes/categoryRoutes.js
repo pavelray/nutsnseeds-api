@@ -1,5 +1,6 @@
 const express = require('express');
 const categoryController = require('./../controllers/categoryController');
+const productRouter = require('./../routes/productRoutes');
 
 const router = express.Router();
 
@@ -13,5 +14,7 @@ router
   .get(categoryController.getCategory)
   .patch(categoryController.updateCategory)
   .delete(categoryController.deleteCategory);
+
+router.use('/:id/product', productRouter);
 
 module.exports = router;
