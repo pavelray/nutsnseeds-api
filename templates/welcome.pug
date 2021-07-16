@@ -1,0 +1,17 @@
+extends baseEmail
+
+block content
+  p Hi #{firstName},
+  p Welcome to Nutsnseeds, we're glad to have you 🎉🙏
+  p We're all a big familiy here, so make sure to browse our shoping categories and choose product for you!
+  table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+    tbody
+      tr
+        td(align='left')
+          table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+            tbody
+              tr
+                td
+                  a(href=`${url}`, target='_blank') Shop Now
+  p If you need any help with placing your order, please don't hesitate to contact me!
+  p - CEO, Nutsnseeds
