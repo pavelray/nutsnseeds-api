@@ -22,7 +22,7 @@ const productSchema = new mongoose.Schema(
       trim: true,
       required: [true, 'A product must have a description']
     },
-    imageUrl: [String],
+    images: [String],
     discount: Number,
     showDiscount: {
       type: Boolean,

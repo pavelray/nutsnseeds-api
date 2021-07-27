@@ -1,8 +1,52 @@
+const multer = require('multer');
+const sharp = require('sharp');
 const Product = require('../models/productModel');
 const APIFeatures = require('../utils/apiFearures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
+
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Not an image! Please upload only images', 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter
+});
+
+exports.uploadProductImages = upload.array('images', 4);
+
+exports.resizeProductImages = catchAsync(async (req, res, next) => {
+  console.log(req.files);
+
+  if (!req.files) return next();
+
+  req.body.images = [];
+
+  await Promise.all(
+    req.files.map(async (file, index) => {
+      const fileName = `product-${req.params.id}-${Date.now()}-${index + 1}.jpeg`;
+
+      await sharp(file.buffer)
+        .resize(500, 500)
+        .withMetadata()
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`public/img/products/${fileName}`);
+
+      req.body.images.push(fileName);
+    })
+  );
+
+  next();
+});
 
 /**
  * Get all products - with filter,sort and pagination

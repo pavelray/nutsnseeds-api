@@ -13,7 +13,13 @@ router
 router
   .route('/:id')
   .get(productController.getProduct)
-  .patch(authController.protectedRoute, authController.restrictTo('admin'), productController.updateProduct)
+  .patch(
+    authController.protectedRoute,
+    authController.restrictTo('admin'),
+    productController.uploadProductImages,
+    productController.resizeProductImages,
+    productController.updateProduct
+  )
   .delete(authController.protectedRoute, authController.restrictTo('admin'), productController.deleteProduct);
 
 router.use('/:productId/reviews', reviewRouter);
