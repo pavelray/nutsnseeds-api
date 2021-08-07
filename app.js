@@ -4,7 +4,6 @@ const cors = require('cors');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
-const compression = require('compression');
 const timeout = require('connect-timeout');
 
 const AppError = require('./utils/appError');
@@ -52,7 +51,7 @@ app.use(xss());
 //   })
 // );
 
-app.use(compression);
+// app.use(compression);
 
 //Serving Static files
 app.use(express.static(`${__dirname}/public`));
