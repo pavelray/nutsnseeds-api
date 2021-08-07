@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const compression = require('compression');
+const timeout = require('connect-timeout');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -23,6 +24,8 @@ app.enable('trust proxy');
 
 //Set Security HTTP headers
 app.use(helmet());
+
+app.use(timeout('5s'));
 
 // Development logging
 if (process.env.NODE_ENV === 'development') {
