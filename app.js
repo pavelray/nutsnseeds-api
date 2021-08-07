@@ -34,6 +34,8 @@ if (process.env.NODE_ENV === 'development') {
 //CORS
 app.use(cors());
 
+app.options('*', cors());
+
 //Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
 
