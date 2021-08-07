@@ -20,9 +20,14 @@ const sendErrorProd = (err, res) => {
   } else {
     //Showing a generic msg for all other errors in prod
     // console.log('Error:', err);
+    // res.status(500).json({
+    //   status: 'error',
+    //   message: 'Something went wrong !'
+    // });
+
     res.status(500).json({
       status: 'error',
-      message: 'Something went wrong !'
+      message: err.message
     });
   }
 };
