@@ -1,5 +1,6 @@
 const multer = require('multer');
 const sharp = require('sharp');
+const Category = require('../models/categoryModel');
 const Product = require('../models/productModel');
 const APIFeatures = require('../utils/apiFearures');
 const AppError = require('../utils/appError');
@@ -86,6 +87,7 @@ exports.getProduct = catchAsync(async (req, res, next) => {
 /**Create a new product */
 exports.createProduct = catchAsync(async (req, res, next) => {
   const newProduct = await Product.create(req.body);
+  await Category.findByIdAndUpdate(req.body.category, { $inc: { totalProducts: 1 } }, { new: true });
 
   res.status(201).json({
     status: 'success',

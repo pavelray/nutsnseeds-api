@@ -8,7 +8,7 @@ const categorySchema = new mongoose.Schema({
     unique: true,
     trim: true,
     maxlength: [40, 'A product name must have less or equal then 40 characters'],
-    minlength: [10, 'A product name must have more or equal then 10 characters']
+    minlength: [6, 'A product name must have more or equal then 6 characters']
   },
   slug: String,
   description: {
@@ -28,7 +28,8 @@ const categorySchema = new mongoose.Schema({
   image: {
     type: String,
     default: 'default.jpg'
-  }
+  },
+  totalProducts: { type: Number, default: 0 }
 });
 
 categorySchema.pre('save', function(next) {

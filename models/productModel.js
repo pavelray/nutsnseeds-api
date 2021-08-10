@@ -77,10 +77,10 @@ productSchema.virtual('size', {
 //   next();
 // });
 
-productSchema.pre(/^find/, function(next) {
-  this.populate({ path: 'category', select: '-__v' });
-  next();
-});
+// productSchema.pre(/^find/, function(next) {
+//   this.populate({ path: 'category', select: '-__v' });
+//   next();
+// });
 
 const Product = mongoose.model('Product', productSchema);
 
