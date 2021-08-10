@@ -63,6 +63,12 @@ productSchema.virtual('review', {
   localField: '_id'
 });
 
+productSchema.virtual('size', {
+  ref: 'ProductSize',
+  foreignField: 'product',
+  localField: '_id'
+});
+
 // This is query middleware
 
 // Returns only active product which are available for sell

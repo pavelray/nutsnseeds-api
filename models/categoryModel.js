@@ -24,6 +24,10 @@ const categorySchema = new mongoose.Schema({
   isOutOfStock: {
     type: Boolean,
     default: false
+  },
+  image: {
+    type: String,
+    default: 'default.jpg'
   }
 });
 

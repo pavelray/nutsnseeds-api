@@ -14,13 +14,12 @@ const signToken = id => {
 
 const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
-  console.log(new Date(Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000));
   const cookieOptions = {
     expires: new Date(Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000),
     httpOnly: true
   };
 
-  if (req.secure || req.headers('x-forwarded-proto') === 'https') cookieOptions.secure = true;
+  if (req.secure || req.header('x-forwarded-proto') === 'https') cookieOptions.secure = true;
   res.cookie('jwt', token, cookieOptions);
 
   // Remove the password from output

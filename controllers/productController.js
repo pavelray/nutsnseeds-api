@@ -24,8 +24,6 @@ const upload = multer({
 exports.uploadProductImages = upload.array('images', 4);
 
 exports.resizeProductImages = catchAsync(async (req, res, next) => {
-  console.log(req.files);
-
   if (!req.files) return next();
 
   req.body.images = [];
@@ -71,7 +69,9 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
 
 /** Get a perticular product by its ID */
 exports.getProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findById(req.params.id).populate('review');
+  const product = await Product.findById(req.params.id)
+    .populate('review')
+    .populate('size');
   if (!product) {
     return next(new AppError('No product found with that Id', 404));
   }

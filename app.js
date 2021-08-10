@@ -67,7 +67,7 @@ app.use((req, res, next) => {
 //  #ROUTES
 app.use('/api/v1/category', categoryRouter);
 app.use('/api/v1/product', productRouter);
-app.use('/api/v1/product-size', productSize);
+app.use('/api/v1/sizes', productSize);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/address', addressRouter);
 app.use('/api/v1/reviews', reviewRouter);

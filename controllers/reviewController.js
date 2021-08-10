@@ -5,7 +5,7 @@ const factory = require('./handlerFactory');
 exports.getAllReviews = catchAsync(async (req, res, next) => {
   let filter = {};
 
-  if (req.params.tourId) filter = { tour: req.params.tourId };
+  if (req.params.productId) filter = { product: req.params.productId };
   const reviews = await Review.find(filter);
 
   res.status(200).json({

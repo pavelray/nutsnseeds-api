@@ -2,6 +2,7 @@ const express = require('express');
 const productController = require('./../controllers/productController');
 const authController = require('../controllers/authController');
 const reviewRouter = require('../routes/reviewRoutes');
+const productSizeRouter = require('../routes/productSizeRoutes');
 
 const router = express.Router({ mergeParams: true });
 
@@ -22,6 +23,7 @@ router
   )
   .delete(authController.protectedRoute, authController.restrictTo('admin'), productController.deleteProduct);
 
+router.use('/:productId/sizes', productSizeRouter);
 router.use('/:productId/reviews', reviewRouter);
 
 module.exports = router;

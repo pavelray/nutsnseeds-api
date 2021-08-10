@@ -2,7 +2,10 @@ const ProductSize = require('../models/productSizeModel');
 const catchAsync = require('../utils/catchAsync');
 
 exports.getProductSize = catchAsync(async (req, res, next) => {
-  const size = await ProductSize.find({ productId: req.params.id });
+  let filter = {};
+
+  if (req.params.productId) filter = { product: req.params.productId };
+  const size = await ProductSize.find(filter);
 
   res.status(200).json({
     status: 'success',
