@@ -27,7 +27,7 @@ const categorySchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    default: 'default.jpg'
+    default: 'default.jpeg'
   },
   totalProducts: { type: Number, default: 0 }
 });
