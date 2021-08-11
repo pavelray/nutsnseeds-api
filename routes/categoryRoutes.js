@@ -22,6 +22,6 @@ router
   )
   .delete(authController.protectedRoute, authController.restrictTo('admin'), categoryController.deleteCategory);
 
-router.use('/:id/product', productRouter);
+router.use('/:categoryId/product', productRouter);
 
 module.exports = router;

@@ -47,6 +47,20 @@ exports.resizeProductImages = catchAsync(async (req, res, next) => {
   next();
 });
 
+exports.getCategoryProducts = catchAsync(async (req, res, next) => {
+  let filter = {};
+  if (req.params.categoryId) filter = { category: req.params.categoryId };
+  const products = await Product.find(filter);
+
+  res.status(200).json({
+    status: 'success',
+    results: products.length,
+    data: {
+      products
+    }
+  });
+});
+
 /**
  * Get all products - with filter,sort and pagination
  * eg. /products?_id='1212'&name='test'

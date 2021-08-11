@@ -6,9 +6,11 @@ const productSizeRouter = require('../routes/productSizeRoutes');
 
 const router = express.Router({ mergeParams: true });
 
+router.get('/getAll', productController.getAllProducts);
+
 router
   .route('/')
-  .get(productController.getAllProducts)
+  .get(productController.getCategoryProducts)
   .post(authController.protectedRoute, authController.restrictTo('admin'), productController.createProduct);
 
 router
