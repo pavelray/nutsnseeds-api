@@ -50,7 +50,7 @@ exports.resizeProductImages = catchAsync(async (req, res, next) => {
 exports.getCategoryProducts = catchAsync(async (req, res, next) => {
   let filter = {};
   if (req.params.categoryId) filter = { category: req.params.categoryId };
-  const products = await Product.find(filter);
+  const products = await Product.find(filter).populate('size');
 
   res.status(200).json({
     status: 'success',
@@ -84,9 +84,7 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
 
 /** Get a perticular product by its ID */
 exports.getProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findById(req.params.id)
-    .populate('review')
-    .populate('size');
+  const product = await Product.findById(req.params.id);
   if (!product) {
     return next(new AppError('No product found with that Id', 404));
   }
